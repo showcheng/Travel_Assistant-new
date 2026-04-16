@@ -1,0 +1,9 @@
+{
+  "items": [
+    {
+      "productId": 11,
+      "quantity": 2
+    }
+  ],
+  "remark": "测试商品服务集成"
+}

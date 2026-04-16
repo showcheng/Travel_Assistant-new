@@ -1,0 +1,12 @@
+Total messages: 2 (Errors: 0, Warnings: 0)
+Returning 4 messages for level "info"
+
+[ERROR] Access to XMLHttpRequest at 'http://localhost:8088/api/auth/login' from origin 'http://localhost:3000' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://localhost:3000/login:0
+[ERROR] 响应错误: AxiosError: Network Error
+    at XMLHttpRequest.handleError (http://localhost:3000/node_modules/.vite/deps/axios.js?v=96bbcf4f:1742:19) @ http://localhost:3000/src/utils/request.ts:35
+[ERROR] 登录失败: AxiosError: Network Error
+    at XMLHttpRequest.handleError (http://localhost:3000/node_modules/.vite/deps/axios.js?v=96bbcf4f:1742:19)
+    at Axios.request (http://localhost:3000/node_modules/.vite/deps/axios.js?v=96bbcf4f:2355:41)
+    at async Proxy.login (http://localhost:3000/src/stores/user.ts:13:24)
+    at async handleLogin (http://localhost:3000/src/views/LoginView.vue:43:25) @ http://localhost:3000/src/stores/user.ts:29
+[ERROR] Failed to load resource: net::ERR_FAILED @ http://localhost:8088/api/auth/login:0

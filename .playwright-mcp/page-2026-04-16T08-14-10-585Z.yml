@@ -1,0 +1,23 @@
+- generic [ref=e4]:
+  - generic [ref=e6]:
+    - img [ref=e8]
+    - heading "智慧旅游助手" [level=2] [ref=e11]
+    - paragraph [ref=e12]: 欢迎登录
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]: "*手机号"
+      - generic [ref=e19]:
+        - img [ref=e22]
+        - textbox "*手机号" [ref=e24]:
+          - /placeholder: 请输入手机号
+    - generic [ref=e25]:
+      - generic [ref=e26]: "*密码"
+      - generic [ref=e29]:
+        - img [ref=e32]
+        - textbox "*密码" [ref=e35]:
+          - /placeholder: 请输入密码
+    - button "登录" [ref=e38] [cursor=pointer]:
+      - generic [ref=e39]: 登录
+    - generic [ref=e40]:
+      - text: 还没有账号？
+      - generic [ref=e42] [cursor=pointer]: 立即注册

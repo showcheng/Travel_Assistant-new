@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "productId": 5,
+      "productName": "Summer Palace Ticket",
+      "productImage": "https://example.com/images/summer-palace.jpg",
+      "quantity": 4,
+      "price": 30.00
+    },
+    {
+      "productId": 6,
+      "productName": "Temple of Heaven Tour",
+      "productImage": "https://example.com/images/temple-of-heaven.jpg",
+      "quantity": 2,
+      "price": 45.00
+    }
+  ],
+  "remark": "Second test order with different products"
+}

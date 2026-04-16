@@ -1,0 +1,30 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: travel-group
+
+# 数据源配置（继承公共模块）
+  datasource:
+    url: jdbc:postgresql://localhost:5432/travel_assistant
+    username: postgres
+    password: postgres
+
+  # Redis 配置（继承公共模块）
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  type-aliases-package: com.travel.group.entity
+
+# 日志配置
+logging:
+  level:
+    com.travel.group: DEBUG
+  file:
+    name: logs/travel-group.log

@@ -1,0 +1,12 @@
+{
+  "name": "故宫博物院成人票",
+  "categoryId": 1,
+  "type": "TICKET",
+  "currentPrice": 60.00,
+  "originalPrice": 80.00,
+  "stock": 100,
+  "sales": 0,
+  "coverImage": "https://example.com/images/forbidden-city.jpg",
+  "detail": "故宫博物院成人票，有效期7天",
+  "status": 1
+}

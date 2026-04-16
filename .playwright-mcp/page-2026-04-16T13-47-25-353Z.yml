@@ -1,0 +1,114 @@
+- generic [ref=e48]:
+  - generic [ref=e50]:
+    - generic [ref=e51]:
+      - img [ref=e53]
+      - generic [ref=e56]: 智慧旅游助手
+    - menubar [ref=e57]:
+      - menuitem "商品列表" [ref=e58] [cursor=pointer]:
+        - img [ref=e60]
+        - generic [ref=e63]: 商品列表
+      - menuitem "我的订单" [active] [ref=e64] [cursor=pointer]:
+        - img [ref=e66]
+        - generic [ref=e68]: 我的订单
+      - menuitem "订单统计" [ref=e69] [cursor=pointer]:
+        - img [ref=e71]
+        - generic [ref=e73]: 订单统计
+      - menuitem "个人中心" [ref=e74] [cursor=pointer]:
+        - img [ref=e76]
+        - generic [ref=e78]: 个人中心
+    - button "00" [ref=e81] [cursor=pointer]:
+      - generic [ref=e82]: "00"
+  - main [ref=e83]:
+    - generic [ref=e84]:
+      - generic [ref=e85]:
+        - heading "商品列表" [level=1] [ref=e86]
+        - paragraph [ref=e87]: 浏览和选择您喜欢的旅游商品
+      - generic [ref=e90]:
+        - generic [ref=e93]:
+          - img [ref=e96]
+          - textbox "搜索商品名称" [ref=e98]
+        - generic [ref=e101] [cursor=pointer]:
+          - generic:
+            - combobox [ref=e103]
+            - generic [ref=e104]: 商品类型
+          - img [ref=e107]
+        - generic [ref=e111] [cursor=pointer]:
+          - generic:
+            - combobox [ref=e113]
+            - generic [ref=e114]: 上架
+          - img [ref=e117]
+        - generic [ref=e119]:
+          - button "搜索" [ref=e120] [cursor=pointer]:
+            - generic [ref=e121]:
+              - img [ref=e123]
+              - text: 搜索
+          - button "重置" [ref=e125] [cursor=pointer]:
+            - generic [ref=e126]: 重置
+      - generic [ref=e128]:
+        - generic [ref=e131] [cursor=pointer]:
+          - img [ref=e136]
+          - generic [ref=e139]:
+            - heading "故宫博物院成人票" [level=3] [ref=e140]
+            - paragraph [ref=e141]: 北京故宫博物院成人门票，包含故宫主要景点参观权限
+            - generic [ref=e142]:
+              - generic [ref=e144]: "1"
+              - generic [ref=e146]: "库存: 995"
+            - generic [ref=e147]:
+              - generic [ref=e148]: ¥60
+              - generic [ref=e149]: ¥80
+        - generic [ref=e152] [cursor=pointer]:
+          - img [ref=e157]
+          - generic [ref=e160]:
+            - heading "长城一日游" [level=3] [ref=e161]
+            - paragraph [ref=e162]: 八达岭长城一日游，含交通和导游服务
+            - generic [ref=e163]:
+              - generic [ref=e165]: "1"
+              - generic [ref=e167]: "库存: 497"
+            - generic [ref=e168]:
+              - generic [ref=e169]: ¥188
+              - generic [ref=e170]: ¥238
+        - generic [ref=e173] [cursor=pointer]:
+          - img [ref=e178]
+          - generic [ref=e181]:
+            - heading "天坛公园门票" [level=3] [ref=e182]
+            - paragraph [ref=e183]: 北京天坛公园联票，包含祈年殿、回音壁等景点
+            - generic [ref=e184]:
+              - generic [ref=e186]: "1"
+              - generic [ref=e188]: "库存: 2000"
+            - generic [ref=e189]:
+              - generic [ref=e190]: ¥35
+              - generic [ref=e191]: ¥45
+        - generic [ref=e194] [cursor=pointer]:
+          - img [ref=e199]
+          - generic [ref=e202]:
+            - heading "北京特产礼盒" [level=3] [ref=e203]
+            - paragraph [ref=e204]: 北京特产礼盒，包含烤鸭、果脯等特色食品
+            - generic [ref=e205]:
+              - generic [ref=e207]: "2"
+              - generic [ref=e209]: "库存: 300"
+            - generic [ref=e210]:
+              - generic [ref=e211]: ¥128
+              - generic [ref=e212]: ¥168
+        - generic [ref=e215] [cursor=pointer]:
+          - img [ref=e220]
+          - generic [ref=e223]:
+            - heading "故宫文创纪念品" [level=3] [ref=e224]
+            - paragraph [ref=e225]: 故宫文创纪念品，包含书签、明信片等
+            - generic [ref=e226]:
+              - generic [ref=e228]: "2"
+              - generic [ref=e230]: "库存: 800"
+            - generic [ref=e231]:
+              - generic [ref=e232]: ¥58
+              - generic [ref=e233]: ¥78
+        - generic [ref=e236] [cursor=pointer]:
+          - img [ref=e241]
+          - generic [ref=e244]:
+            - heading "故宫博物院成人票" [level=3] [ref=e245]
+            - paragraph [ref=e246]
+            - generic [ref=e247]:
+              - generic [ref=e249]: "1"
+              - generic [ref=e251]: "库存: 98"
+            - generic [ref=e252]:
+              - generic [ref=e253]: ¥60
+              - generic [ref=e254]: ¥80
+  - paragraph [ref=e256]: © 2024 智慧旅游助手. All rights reserved.

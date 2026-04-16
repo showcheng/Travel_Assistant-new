@@ -1,0 +1,87 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: travel-gateway
+  cloud:
+    gateway:
+      routes:
+        # 用户服务路由
+        - id: travel-user-auth
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/auth/**
+
+        # 用户服务路由
+        - id: travel-user-users
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/users/**
+
+        # 用户服务路由 (单数形式)
+        - id: travel-user-user
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/user/**
+
+        # 商品服务路由
+        - id: travel-product
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/products/**
+
+        # 订单服务路由
+        - id: travel-order
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/orders/**
+
+        # 订单明细服务路由
+        - id: travel-order-items
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/order-items/**
+
+        # 支付服务路由
+        - id: travel-payment
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/payments/**
+
+        # 秒杀服务路由
+        - id: travel-seckill
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/seckill/**
+
+        # 拼团服务路由
+        - id: travel-group
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/group/**
+
+        # AI 服务路由
+        - id: travel-ai
+          uri: http://localhost:8086
+          predicates:
+            - Path=/api/ai/**
+
+        # 数字人直播服务路由
+        - id: travel-live
+          uri: http://localhost:8087
+          predicates:
+            - Path=/api/live/**
+
+# JWT 配置
+jwt:
+  secret: travel-assistant-secret-key-2024
+  expiration: 604800000 # 7 天，单位：毫秒
+
+# 日志配置
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    com.travel.gateway.filter: DEBUG
+  file:
+    name: logs/travel-gateway.log

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧旅游助手 - 手动测试检查清单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .test-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .test-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .test-item:hover {
+            border-left-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+        }
+
+        .test-item.passed {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+
+        .test-item.failed {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .item-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .item-status.pending {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .item-status.passed {
+            background: #28a745;
+            color: white;
+        }
+
+        .item-status.failed {
+            background: #dc3545;
+            color: white;
+        }
+
+        .item-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .test-steps {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .checkbox {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .summary h2 {
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 智慧旅游助手 - 自动化测试检查清单</h1>
+            <p>完整的功能测试指南和进度追踪</p>
+        </div>
+
+        <!-- 测试进度 -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress" style="width: 0%">0% 完成</div>
+        </div>
+
+        <div class="summary" style="margin-top: 20px;">
+            <h2>📊 测试进度统计</h2>
+            <div class="summary-stats">
+                <div class="stat">
+                    <div class="stat-value" id="total">0</div>
+                    <div class="stat-label">总测试</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="passed">0</div>
+                    <div class="stat-label">已通过</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="failed">0</div>
+                    <div class="stat-label">已失败</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="remaining">0</div>
+                    <div class="stat-label">待测试</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. 用户认证模块 -->
+        <div class="test-section">
+            <h2 class="section-title">🔐 1. 用户认证模块</h2>
+
+            <div class="test-item" id="test-login-page">
+                <div class="item-header">
+                    <div class="item-title">登录页面功能测试</div>
+                    <span class="item-status pending" onclick="toggleStatus(this)">待测试</span>
+                </div>
+                <div class="item-description">验证登录页面所有元素和交互功能</div>
+                <div class="test-steps">
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">访问 http://localhost:3000/login</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">检查页面标题和布局</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">验证手机号输入框</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">验证密码输入框和显示/隐藏功能</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试登录按钮状态</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-item" id="test-login-function">
+                <div class="item-header">
+                    <div class="item-title">用户登录功能测试</div>
+                    <span class="item-status pending" onclick="toggleStatus(this)">待测试</span>
+                </div>
+                <div class="item-description">测试用户登录流程和JWT认证</div>
+                <div class="test-steps">
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">输入测试账号: 13800138000</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">输入测试密码: 123456</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">点击登录按钮</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">验证跳转到商品列表页面</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">检查用户信息显示</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 商品管理模块 -->
+        <div class="test-section">
+            <h2 class="section-title">🛍️ 2. 商品管理模块</h2>
+
+            <div class="test-item">
+                <div class="item-header">
+                    <div class="item-title">商品列表页面测试</div>
+                    <span class="item-status pending" onclick="toggleStatus(this)">待测试</span>
+                </div>
+                <div class="test-steps">
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">访问商品列表页面</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">检查商品卡片显示</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试分页功能</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试搜索功能</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-item">
+                <div class="item-header">
+                    <div class="item-title">商品详情页面测试</div>
+                    <span class="item-status pending" onclick="toggleStatus(this)">待测试</span>
+                </div>
+                <div class="test-steps">
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">点击商品查看详情</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">检查商品信息展示</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">验证价格和库存显示</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 订单管理模块 -->
+        <div class="test-section">
+            <h2 class="section-title">📋 3. 订单管理模块</h2>
+
+            <div class="test-item">
+                <div class="item-header">
+                    <div class="item-title">创建订单流程测试</div>
+                    <span class="item-status pending" onclick="toggleStatus(this)">待测试</span>
+                </div>
+                <div class="test-steps">
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">选择商品并创建订单</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">调整商品数量</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">提交订单</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">验证订单创建成功</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-item">
+                <div class="item-header">
+                    <div class="item-title">订单列表和详情测试</div>
+                    <span class="item-status pending" onclick="toggleStatus(this)">待测试</span>
+                </div>
+                <div class="test-steps">
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">查看订单列表</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试订单搜索功能</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试状态筛选功能</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">查看订单详情</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-item">
+                <div class="item-header">
+                    <div class="item-title">订单操作功能测试</div>
+                    <span class="item-status pending" onclick="toggleStatus(this)">待测试</span>
+                </div>
+                <div class="test-steps">
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试订单支付功能</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试订单取消功能</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试订单退款功能</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试数据导出功能</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 统计分析模块 -->
+        <div class="test-section">
+            <h2 class="section-title">📊 4. 统计分析模块</h2>
+
+            <div class="test-item">
+                <div class="item-header">
+                    <div class="item-title">订单统计页面测试</div>
+                    <span class="item-status pending" onclick="toggleStatus(this)">待测试</span>
+                </div>
+                <div class="test-steps">
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">访问订单统计页面</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">检查统计卡片显示</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">验证状态分布图</span>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" class="checkbox" onchange="updateProgress()">
+                        <span class="step-text">测试数据导出功能</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 测试完成操作 -->
+        <div class="summary">
+            <h2>🎯 测试完成</h2>
+            <div class="buttons">
+                <button class="btn btn-primary" onclick="window.open('http://localhost:3000', '_blank')">
+                    打开应用进行测试
+                </button>
+                <button class="btn btn-success" onclick="generateReport()">
+                    生成测试报告
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let totalTests = 0;
+        let passedTests = 0;
+        let failedTests = 0;
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const total = checkboxes.length;
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+            totalTests = total;
+            passedTests = checked;
+
+            const percentage = Math.round((checked / total) * 100);
+
+            document.getElementById('progress').style.width = percentage + '%';
+            document.getElementById('progress').textContent = percentage + '% 完成';
+
+            document.getElementById('total').textContent = totalTests;
+            document.getElementById('passed').textContent = passedTests;
+            document.getElementById('remaining').textContent = totalTests - passedTests;
+
+            // 更新测试项目状态
+            const testItems = document.querySelectorAll('.test-item');
+            testItems.forEach(item => {
+                const itemCheckboxes = item.querySelectorAll('.checkbox');
+                const itemTotal = itemCheckboxes.length;
+                const itemChecked = Array.from(itemCheckboxes).filter(cb => cb.checked).length;
+
+                const status = item.querySelector('.item-status');
+                if (itemChecked === 0) {
+                    status.className = 'item-status pending';
+                    status.textContent = '待测试';
+                    item.className = 'test-item';
+                } else if (itemChecked === itemTotal) {
+                    status.className = 'item-status passed';
+                    status.textContent = '已通过';
+                    item.className = 'test-item passed';
+                } else {
+                    status.className = 'item-status passed';
+                    status.textContent = '进行中';
+                    item.className = 'test-item';
+                }
+            });
+        }
+
+        function toggleStatus(element) {
+            const item = element.closest('.test-item');
+            const checkboxes = item.querySelectorAll('.checkbox');
+
+            if (element.textContent === '待测试') {
+                // 标记为测试中
+                element.textContent = '进行中';
+                element.className = 'item-status passed';
+            } else if (element.textContent === '进行中') {
+                // 标记为已完成
+                element.textContent = '已通过';
+                element.className = 'item-status passed';
+                item.className = 'test-item passed';
+
+                // 自动勾选所有步骤
+                checkboxes.forEach(cb => cb.checked = true);
+                updateProgress();
+            }
+        }
+
+        function generateReport() {
+            const date = new Date().toLocaleString('zh-CN');
+            const percentage = Math.round((passedTests / totalTests) * 100);
+
+            const report = `
+========================================
+智慧旅游助手 - 测试报告
+========================================
+测试时间: ${date}
+测试进度: ${percentage}% (${passedTests}/${totalTests})
+
+测试结果:
+✓ 已通过: ${passedTests}
+⏳ 待测试: ${totalTests - passedTests}
+✗ 已失败: ${failedTests}
+
+========================================
+测试结论: ${percentage >= 80 ? '系统功能完整，可以投入使用' : '需要继续测试和完善'}
+========================================
+            `;
+
+            alert(report);
+        }
+
+        // 初始化
+        window.onload = function() {
+            updateProgress();
+        };
+    </script>
+</body>
+</html>

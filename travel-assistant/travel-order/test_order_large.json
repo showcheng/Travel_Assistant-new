@@ -1,0 +1,9 @@
+{
+  "items": [
+    {
+      "productId": 11,
+      "quantity": 99
+    }
+  ],
+  "remark": "测试库存不足"
+}
