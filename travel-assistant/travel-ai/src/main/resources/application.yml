@@ -25,9 +25,12 @@ mybatis-plus:
 # GLM-5 API 配置
 glm5:
   api:
-    key: ${GLM5_API_KEY:your-api-key-here}
+    key: ${GLM5_API_KEY:e217140203d34544acb721230c4f3d57.M4VERrYX2rKgB66r}
     url: https://open.bigmodel.cn/api/paas/v4/
-    model: glm-5
+    model: glm-4
+    temperature: 0.7
+    max-tokens: 2000
+    timeout: 30000
 
 # 日志配置
 logging:
