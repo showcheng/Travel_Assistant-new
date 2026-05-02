@@ -62,6 +62,7 @@ export interface Product {
   originalPrice: number
   currentPrice: number
   stock: number
+  coverImage?: string
   imageUrl?: string
   status: number
   scenicSpotId?: number

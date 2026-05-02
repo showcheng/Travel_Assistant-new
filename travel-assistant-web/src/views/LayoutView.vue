@@ -23,6 +23,14 @@
             <el-icon><Document /></el-icon>
             <span>我的订单</span>
           </el-menu-item>
+          <el-menu-item index="/ai-chat">
+            <el-icon><ChatDotRound /></el-icon>
+            <span>AI助手</span>
+          </el-menu-item>
+          <el-menu-item index="/knowledge-base">
+            <el-icon><Reading /></el-icon>
+            <span>知识库</span>
+          </el-menu-item>
           <el-menu-item index="/order-statistics">
             <el-icon><DataAnalysis /></el-icon>
             <span>订单统计</span>

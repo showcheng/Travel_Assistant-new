@@ -70,6 +70,18 @@ const routes: RouteRecordRaw[] = [
         name: 'Profile',
         component: () => import('@/views/ProfileView.vue'),
         meta: { title: '个人中心', requiresAuth: true, icon: 'User' }
+      },
+      {
+        path: 'ai-chat',
+        name: 'AIChat',
+        component: () => import('@/views/AIChatView.vue'),
+        meta: { title: 'AI智能助手', requiresAuth: true, icon: 'ChatDotRound' }
+      },
+      {
+        path: 'knowledge-base',
+        name: 'KnowledgeBase',
+        component: () => import('@/views/KnowledgeBaseView.vue'),
+        meta: { title: '知识库管理', requiresAuth: true, icon: 'Reading' }
       }
     ]
   },

@@ -76,13 +76,14 @@
           <el-card class="product-card" shadow="hover" @click="goToDetail(product.id)">
             <div class="product-image">
               <el-image
-                :src="product.coverImage || '/placeholder.jpg'"
+                :src="getProductImage(product)"
                 fit="cover"
                 lazy
               >
                 <template #error>
                   <div class="image-error">
                     <el-icon :size="40"><Picture /></el-icon>
+                    <span>{{ getProductTypeName(product.type) }}</span>
                   </div>
                 </template>
               </el-image>
@@ -98,10 +99,12 @@
 
             <div class="product-info">
               <h3 class="product-name">{{ product.name }}</h3>
-              <p class="product-description">{{ product.description }}</p>
+              <p class="product-description">{{ product.description || '暂无描述' }}</p>
 
               <div class="product-meta">
-                <el-tag size="small" type="success">{{ product.type }}</el-tag>
+                <el-tag size="small" :type="getTypeTagColor(product.type)">
+                  {{ getProductTypeName(product.type) }}
+                </el-tag>
                 <el-tag size="small" type="info">
                   库存: {{ product.stock }}
                 </el-tag>
@@ -142,25 +145,78 @@ import type { Product } from '@/types'
 
 const router = useRouter()
 
-// 状态
 const loading = ref(false)
 const products = ref<Product[]>([])
 const total = ref(0)
 
-// 搜索表单
 const searchForm = reactive({
   keyword: '',
   type: '',
   status: 1 as number | undefined
 })
 
-// 分页
 const pagination = reactive({
   page: 1,
   size: 12
 })
 
-// 加载商品列表
+const typeNames: Record<string, string> = {
+  ticket: '景点门票',
+  hotel: '酒店住宿',
+  package: '旅游套餐',
+  merchandise: '特色商品'
+}
+
+const typeColors: Record<string, string> = {
+  ticket: 'success',
+  hotel: 'warning',
+  package: 'danger',
+  merchandise: 'info'
+}
+
+const defaultImages: Record<string, string[]> = {
+  ticket: [
+    'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop'
+  ],
+  hotel: [
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&h=600&fit=crop'
+  ],
+  package: [
+    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop'
+  ],
+  merchandise: [
+    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1607082349566-187342175e2f?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=600&fit=crop'
+  ]
+}
+
+const getProductImage = (product: Product): string => {
+  if (product.coverImage) return product.coverImage
+  if (product.imageUrl) return product.imageUrl
+
+  const images = defaultImages[product.type] || defaultImages.ticket
+  return images[(product.id || 0) % images.length]
+}
+
+const getProductTypeName = (type: string): string => {
+  return typeNames[type] || type
+}
+
+const getTypeTagColor = (type: string): string => {
+  return typeColors[type] || ''
+}
+
 const loadProducts = async () => {
   loading.value = true
   try {
@@ -179,13 +235,11 @@ const loadProducts = async () => {
   }
 }
 
-// 搜索
 const handleSearch = () => {
   pagination.page = 1
   loadProducts()
 }
 
-// 重置
 const handleReset = () => {
   searchForm.keyword = ''
   searchForm.type = ''
@@ -193,25 +247,21 @@ const handleReset = () => {
   handleSearch()
 }
 
-// 页码变化
 const handlePageChange = (page: number) => {
   pagination.page = page
   loadProducts()
 }
 
-// 每页数量变化
 const handleSizeChange = (size: number) => {
   pagination.size = size
   pagination.page = 1
   loadProducts()
 }
 
-// 跳转详情页
 const goToDetail = (id: number) => {
   router.push(`/products/${id}`)
 }
 
-// 初始化
 onMounted(() => {
   loadProducts()
 })
@@ -266,7 +316,7 @@ onMounted(() => {
   width: 100%;
   height: 200px;
   margin-bottom: 12px;
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: hidden;
 }
 
@@ -277,12 +327,15 @@ onMounted(() => {
 
 .image-error {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: #f5f7fa;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ed 100%);
   color: #c0c4cc;
+  gap: 8px;
+  font-size: 13px;
 }
 
 .status-tag {

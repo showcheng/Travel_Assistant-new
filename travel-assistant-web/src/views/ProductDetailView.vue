@@ -15,13 +15,14 @@
           <el-col :span="12">
             <div class="product-image">
               <el-image
-                :src="product.imageUrl || '/placeholder.jpg'"
+                :src="getProductImage(product)"
                 fit="cover"
-                :preview-src-list="[product.imageUrl || '']"
+                :preview-src-list="[getProductImage(product)]"
               >
                 <template #error>
                   <div class="image-error">
                     <el-icon :size="80"><Picture /></el-icon>
+                    <span>{{ getTypeName(product.type) }}</span>
                   </div>
                 </template>
               </el-image>
@@ -58,7 +59,9 @@
               <div class="product-meta">
                 <div class="meta-item">
                   <span class="label">商品类型：</span>
-                  <el-tag size="small">{{ product.type }}</el-tag>
+                  <el-tag size="small" :type="getTypeTagColor(product.type)">
+                    {{ getTypeName(product.type) }}
+                  </el-tag>
                 </div>
                 <div class="meta-item">
                   <span class="label">库存数量：</span>
@@ -76,7 +79,7 @@
 
               <div class="product-description">
                 <h3>商品描述</h3>
-                <p>{{ product.description }}</p>
+                <p>{{ product.description || '暂无详细描述' }}</p>
               </div>
 
               <div class="action-buttons">
@@ -117,11 +120,65 @@ import type { Product } from '@/types'
 const router = useRouter()
 const route = useRoute()
 
-// 状态
 const loading = ref(false)
 const product = ref<Product | null>(null)
 
-// 加载商品详情
+const typeNames: Record<string, string> = {
+  ticket: '景点门票',
+  hotel: '酒店住宿',
+  package: '旅游套餐',
+  merchandise: '特色商品'
+}
+
+const typeColors: Record<string, string> = {
+  ticket: 'success',
+  hotel: 'warning',
+  package: 'danger',
+  merchandise: 'info'
+}
+
+const defaultImages: Record<string, string[]> = {
+  ticket: [
+    'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop'
+  ],
+  hotel: [
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&h=600&fit=crop'
+  ],
+  package: [
+    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop'
+  ],
+  merchandise: [
+    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1607082349566-187342175e2f?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=600&fit=crop'
+  ]
+}
+
+const getProductImage = (p: Product): string => {
+  if (p.coverImage) return p.coverImage
+  if (p.imageUrl) return p.imageUrl
+  const images = defaultImages[p.type] || defaultImages.ticket
+  return images[(p.id || 0) % images.length]
+}
+
+const getTypeName = (type: string): string => {
+  return typeNames[type] || type
+}
+
+const getTypeTagColor = (type: string): string => {
+  return typeColors[type] || ''
+}
+
 const loadProductDetail = async () => {
   const productId = Number(route.params.id)
   if (!productId) {
@@ -142,12 +199,10 @@ const loadProductDetail = async () => {
   }
 }
 
-// 返回列表
 const goBack = () => {
   router.push('/products')
 }
 
-// 立即购买
 const handleBuyNow = () => {
   if (!product.value) return
 
@@ -160,13 +215,10 @@ const handleBuyNow = () => {
   })
 }
 
-// 加入购物车
 const handleAddToCart = () => {
-  // TODO: 实现购物车功能
   ElMessage.info('购物车功能开发中')
 }
 
-// 初始化
 onMounted(() => {
   loadProductDetail()
 })
@@ -204,12 +256,15 @@ onMounted(() => {
 
 .image-error {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: #f5f7fa;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ed 100%);
   color: #c0c4cc;
+  gap: 12px;
+  font-size: 16px;
 }
 
 .product-main {
