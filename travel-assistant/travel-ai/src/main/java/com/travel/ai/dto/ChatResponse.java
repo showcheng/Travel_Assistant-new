@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 对话响应DTO
@@ -50,4 +51,9 @@ public class ChatResponse {
      * 错误信息
      */
     private String error;
+
+    /**
+     * 知识库来源信息列表
+     */
+    private List<SourceInfo> sources;
 }

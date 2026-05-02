@@ -25,6 +25,14 @@ public interface AIService {
     String chatStream(ChatRequest request);
 
     /**
+     * 流式对话 (简化版本，直接接收消息字符串)
+     *
+     * @param message 消息内容
+     * @return AI回复
+     */
+    String chatStream(String message);
+
+    /**
      * 清除对话历史
      *
      * @param sessionId 会话ID

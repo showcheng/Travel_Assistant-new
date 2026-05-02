@@ -1,0 +1,60 @@
+# Test Profile Configuration
+# Activated via @ActiveProfiles("test") or -Dspring.profiles.active=test
+
+server:
+  port: 0  # Random available port
+
+spring:
+  application:
+    name: travel-ai-test
+
+  # Disable auto-config for external systems we don't need in unit tests
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+
+  # Use an in-memory H2 database for tests if needed
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MYSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  # Disable Redis in tests
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# MyBatis-Plus - minimal config for tests
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  type-aliases-package: com.travel.ai.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+# GLM-5 API - dummy values, tests should mock the AI client
+glm5:
+  api:
+    key: test-dummy-api-key
+    url: http://localhost:9999/dummy-glm-api/
+    model: glm-4-test
+    temperature: 0.7
+    max-tokens: 100
+    timeout: 5000
+
+# Milvus - dummy values, tests should mock the vector store
+milvus:
+  host: localhost
+  port: 19530
+  collection-name: travel_knowledge_test
+  dimension: 768
+
+# Logging - reduce noise in test output
+logging:
+  level:
+    root: WARN
+    com.travel.ai: WARN
+    org.springframework: WARN
+    org.mybatis: WARN

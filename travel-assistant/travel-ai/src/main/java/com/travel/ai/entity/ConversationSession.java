@@ -59,4 +59,9 @@ public class ConversationSession {
      * 过期时间
      */
     private LocalDateTime expiredAt;
+
+    /**
+     * 会话摘要（压缩后的对话总结）
+     */
+    private String summary;
 }
